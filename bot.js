@@ -1,6 +1,7 @@
 var Discord = require('discord.io');
 var logger = require('winston');
 var auth = require('./auth.json');
+var jokes = require('./jokes.json');
 var comparison = "";
 var len = 0;
 var end = "";
@@ -39,10 +40,17 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     to: channelID,
                     message: 'Pong!'
                 });
+			break;
 			case 'hungry':
 				bot.sendMessage({
 					to: channelID,
 					message: "Hi hungry, I'm dad!"
+				});
+			break;
+			case 'joke':
+				bot.sendMessage({
+					to: channelID,
+					message: jokes.joke[Math.floor(Math.random() * jokes.joke.length)]
 				});
             break;
             // Just add any case commands if you want to..
