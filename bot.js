@@ -7,6 +7,7 @@ var len = 0;
 var end = "";
 var msg = "";
 var index = 0;
+var mute = false;
 
 // Configure logger settings
 logger.remove(logger.transports.Console);
@@ -40,20 +41,22 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                     to: channelID,
                     message: 'Pong!'
                 });
-			break;
+				break;
 			case 'hungry':
 				bot.sendMessage({
 					to: channelID,
 					message: "Hi hungry, I'm dad!"
 				});
-			break;
+				break;
 			case 'joke':
 				bot.sendMessage({
 					to: channelID,
 					message: jokes.joke[Math.floor(Math.random() * jokes.joke.length)]
 				});
-            break;
-            // Just add any case commands if you want to..
+				break;
+			case 'mute':
+				mute = !mute;
+				break;
          }
      }
 	 
@@ -98,7 +101,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 		{
 			msg = msg.substring(1);
 		}
-		if(user != "Dad-Bot"){
+		if(user != "Dad-Bot" && !mute){
 			bot.sendMessage({
 				to: channelID,
 				message: "Hi " + msg + ", I'm dad!"
@@ -117,7 +120,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
 	response(message, 'ur ancestors incestors', 'no u');
 	
 	function response(input, trigger, response){
-		 if (input.toString().toLowerCase().indexOf(trigger) >= 0 && user != 'Dad-Bot'){
+		 if (input.toString().toLowerCase().indexOf(trigger) >= 0 && user != 'Dad-Bot' && !mute){
 			bot.sendMessage({
 				to: channelID,
 				message: response
